@@ -1,0 +1,11 @@
+Attaching 6 probes...
+^C
+
+@ext_syscall_start: 2501971018853593
+@ext_syscall_time: count 1000000, average 4143, total 4143953843
+
+@ipi_time: count 1000000, average 2995, total 2995553894
+
+@start: 2501971018854059
+@syscall_start: 2501971018853801
+@syscall_time: count 1000000, average 3447, total 3447424726
