@@ -1,0 +1,31 @@
+#!/usr/bin/bpftrace
+
+tracepoint:syscalls:sys_enter_membarrier
+{
+  @syscall_start = nsecs;
+}
+tracepoint:syscalls:sys_exit_membarrier
+{
+  @syscall_time = stats(nsecs - @syscall_start);
+}
+
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn+73
+{
+  @ext_syscall_start = nsecs;
+}
+
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn+78
+{
+  @ext_syscall_time = stats(nsecs - @ext_syscall_start);
+}
+
+kfunc:smp_call_function_many
+{
+  @start = nsecs;
+}
+
+kretfunc:smp_call_function_many
+{
+  @ipi_time = stats(nsecs - @start);
+}
+
