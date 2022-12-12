@@ -1,10 +1,11 @@
 #!/usr/bin/bpftrace
 
-tracepoint:syscalls:sys_enter_membarrier
+kfunc:membarrier_global_expedited
 {
   @syscall_start = nsecs;
 }
-tracepoint:syscalls:sys_exit_membarrier
+
+kretfunc:membarrier_global_expedited
 {
   @syscall_time = stats(nsecs - @syscall_start);
 }
