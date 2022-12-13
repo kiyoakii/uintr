@@ -5,6 +5,16 @@
 
 #define NUM 1000000
 
+void reader_fn_private() {
+  syscall(SYS_membarrier, MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED, 0, 0);
+  while (1) {
+    int x = 0;
+    for (int i = 0; i < 1000000000; i++) {
+      x = x + i;
+    }
+  }
+}
+
 void reader_fn() {
   syscall(SYS_membarrier, MEMBARRIER_CMD_REGISTER_GLOBAL_EXPEDITED, 0, 0);
   while (1) {
@@ -15,21 +25,20 @@ void reader_fn() {
   }
 }
 
-void writer_fn() {
+void writer_fn_private() {
   sleep(5);
-  long unsigned duration = 0;
   for (int i = 0; i < NUM; i++) {
-    struct timespec start, end;
-    clock_gettime(CLOCK_REALTIME, &start);
-
-    syscall(SYS_membarrier, MEMBARRIER_CMD_GLOBAL_EXPEDITED, 0, 0);
-
-    clock_gettime(CLOCK_REALTIME, &end);
-    // printf("ts.nsec: %lu\n", end.tv_nsec - start.tv_nsec);
-    duration += end.tv_nsec - start.tv_nsec;
+    syscall(SYS_membarrier, MEMBARRIER_CMD_PRIVATE_EXPEDITED, 0, 0);
   }
   cancel();
-  printf("avg membarrier syscall duration: %lu\n", duration);
+}
+
+void writer_fn() {
+  sleep(5);
+  for (int i = 0; i < NUM; i++) {
+    syscall(SYS_membarrier, MEMBARRIER_CMD_GLOBAL_EXPEDITED, 0, 0);
+  }
+  cancel();
 }
 
 int main() {
