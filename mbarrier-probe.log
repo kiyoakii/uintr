@@ -1,3 +1,4 @@
+GLOBAL (20 reader, 1 writer)
 Attaching 6 probes...
 ^C
 
@@ -9,3 +10,15 @@ Attaching 6 probes...
 @start: 2501971018854059
 @syscall_start: 2501971018853801
 @syscall_time: count 1000000, average 3447, total 3447424726
+
+
+PRIVATE (1 reader 1 writer)
+@ext_syscall_start: 2530040398573669
+@ext_syscall_time: count 1000000, average 1576, total 1576976499
+
+@ipi_time: count 1000000, average 390, total 390319218
+
+@start: 2530040398574399
+@syscall_start: 2530040398574243
+@syscall_time: count 1000000, average 670, total 670059015
+

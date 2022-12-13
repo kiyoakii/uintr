@@ -10,12 +10,12 @@ kretfunc:membarrier_global_expedited
   @syscall_time = stats(nsecs - @syscall_start);
 }
 
-uprobe:/home/nabokov/uintr/mbarrier:writer_fn+73
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn+52
 {
   @ext_syscall_start = nsecs;
 }
 
-uprobe:/home/nabokov/uintr/mbarrier:writer_fn+78
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn+59
 {
   @ext_syscall_time = stats(nsecs - @ext_syscall_start);
 }
