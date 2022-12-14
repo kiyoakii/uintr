@@ -11,6 +11,19 @@ Attaching 6 probes...
 @syscall_start: 2501971018853801
 @syscall_time: count 1000000, average 3447, total 3447424726
 
+GLOBAL (15 reader, 1 writer) on SMT-disabled i9-12900k (8+8)
+Attaching 6 probes...
+^C
+
+@ext_syscall_start: 2591392075672304
+@ext_syscall_time: count 1000000, average 3374, total 3374247600
+
+@ipi_time: count 1000000, average 2188, total 2188294067
+
+@start: 2591392075673024
+@syscall_start: 2591392075672857
+@syscall_time: count 1000000, average 2468, total 2468684252
+
 
 PRIVATE (1 reader 1 writer)
 @ext_syscall_start: 2530040398573669

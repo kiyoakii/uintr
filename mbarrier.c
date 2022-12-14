@@ -46,7 +46,12 @@ int main() {
     create(reader_fn);
   }
 
-  // create(reader_fn_private);
+  pthread_t self = pthread_self();
+  cpu_set_t cpuset;
+  CPU_ZERO(&cpuset);
+  CPU_SET(0, &cpuset);
+  pthread_setaffinity_np(self, sizeof(cpuset), &cpuset);
+
   writer_fn();
   return 0;
 }
