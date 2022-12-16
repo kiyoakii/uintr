@@ -1,0 +1,32 @@
+#!/usr/bin/bpftrace
+
+kfunc:membarrier_private_expedited
+{
+  @syscall_start = nsecs;
+}
+
+kretfunc:membarrier_private_expedited
+{
+  @syscall_time = stats(nsecs - @syscall_start);
+}
+
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn_private+52
+{
+  @ext_syscall_start = nsecs;
+}
+
+uprobe:/home/nabokov/uintr/mbarrier:writer_fn_private+59
+{
+  @ext_syscall_time = stats(nsecs - @ext_syscall_start);
+}
+
+kfunc:smp_call_function_many
+{
+  @start = nsecs;
+}
+
+kretfunc:smp_call_function_many
+{
+  @ipi_time = stats(nsecs - @start);
+}
+
